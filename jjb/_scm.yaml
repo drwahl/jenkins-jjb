@@ -2,7 +2,7 @@
     name: github
     scm:
       - git:
-          url: "git@github.com:{github-owner}/{github-project}.git"
+          url: "https://github.com/{github-owner}/{github-project}"
           branches:
             - '{branch}'
           browser: githubweb
