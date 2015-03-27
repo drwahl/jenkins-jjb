@@ -1,0 +1,9 @@
+- project:
+    name: all-jobs
+
+    github-project-owner: 'drwahl'
+    github-project-branch: 'master'
+
+    jobs:
+      - pimometer:
+          github-project-name: 'pimometer'

@@ -55,7 +55,7 @@
 
     scm:
         - github:
-              github-owner: '{github-owner-name}'
+              github-owner: '{github-project-owner}'
               github-project: '{github-project-name}'
               branch: '{github-branch-name}'
 
@@ -78,7 +78,7 @@
 
     scm:
         - github:
-              github-owner: '{github-owner-name}'
+              github-owner: '{github-project-owner}'
               github-project: '{github-project-name}'
               branch: '{github-branch-name}'
 
@@ -102,7 +102,7 @@
 
     scm:
         - github:
-              github-owner: '{github-owner-name}'
+              github-owner: '{github-project-owner}'
               github-project: '{github-project-name}'
               branch: '{github-branch-name}'
 
