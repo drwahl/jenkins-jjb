@@ -1,6 +1,6 @@
 - project:
     name: pimometer
-    
+
     scm:
         - github:
             github-owner: 'drwahl'
