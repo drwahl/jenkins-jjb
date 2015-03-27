@@ -3,9 +3,9 @@
 
     scm:
         - github:
-            github-owner: 'drwahl'
-            github-project: 'pimometer'
-            branch: 'master'
+            github-owner: '{github-project-owner}'
+            github-project: '{github-project-name}'
+            branch: '{github-branch-name}'
 
     triggers:
         - github
