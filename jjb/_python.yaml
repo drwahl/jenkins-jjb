@@ -54,12 +54,13 @@
       - gerrit-params
 
     scm:
-      - internal-git-check:
-          git-repo-name: '{git-repo-name}'
+        - github:
+              github-owner: '{github-owner-name}'
+              github-project: '{github-project-name}'
+              branch: '{github-branch-name}'
 
     triggers:
-      - internal-patch-posted:
-          git-repo-name: '{git-repo-name}'
+      - github
 
     builders:
       - python-style
@@ -76,12 +77,13 @@
       - gerrit-params
 
     scm:
-      - internal-git-check:
-          git-repo-name: '{git-repo-name}'
+        - github:
+              github-owner: '{github-owner-name}'
+              github-project: '{github-project-name}'
+              branch: '{github-branch-name}'
 
     triggers:
-      - internal-patch-posted:
-          git-repo-name: '{git-repo-name}'
+      - github
 
     builders:
       - tox-run:
@@ -99,8 +101,10 @@
       - gerrit-params
 
     scm:
-      - internal-git-merged:
-          git-repo-name: '{git-repo-name}'
+        - github:
+              github-owner: '{github-owner-name}'
+              github-project: '{github-project-name}'
+              branch: '{github-branch-name}'
 
     triggers:
       - daily
@@ -108,9 +112,6 @@
     builders:
       - tox-run:
           envlist: 'py27'
-
-    publishers:
-      - cloud-chat-changes-only
 
 
 - job-group:
