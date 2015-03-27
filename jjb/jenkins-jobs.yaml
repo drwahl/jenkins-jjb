@@ -28,12 +28,13 @@
       - jenkins-path
 
     scm:
-      - internal-git-check:
-          git-repo-name: dhc/jenkins
+        - github:
+            github-owner: 'drwahl'
+            github-project: 'jenkins-jjb'
+            branch: 'master'
 
     triggers:
-      - internal-patch-posted:
-          git-repo-name: dhc/jenkins
+        - github
 
     builders:
       - tox-run:
@@ -51,12 +52,13 @@
       - jenkins-path
 
     scm:
-      - internal-git-merged:
-          git-repo-name: dhc/jenkins
+        - github:
+            github-owner: 'drwahl'
+            github-project: 'jenkins-jjb'
+            branch: 'master'
 
     triggers:
-      - internal-patch-merged:
-          git-repo-name: dhc/jenkins
+      - github
 
     builders:
       - tox-run-with-args:
@@ -75,8 +77,10 @@
       - jenkins-path
 
     scm:
-      - internal-git-merged:
-          git-repo-name: dhc/jenkins
+        - github:
+            github-owner: 'drwahl'
+            github-project: 'jenkins-jjb'
+            branch: 'master'
 
     builders:
       - tox-run-with-args:
