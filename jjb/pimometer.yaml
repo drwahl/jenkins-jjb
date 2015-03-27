@@ -1,0 +1,15 @@
+- project:
+    name: pimometer
+    
+    scm:
+        - github:
+            github-owner: 'drwahl'
+            github-project: 'pimometer'
+            branch: 'master'
+
+    triggers:
+        - github
+        - poll-hourly
+
+    jobs:
+        - python-bitrot

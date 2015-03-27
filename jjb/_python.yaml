@@ -1,0 +1,126 @@
+# Job templates for Python projects
+
+- builder:
+    name: python-style
+    builders:
+      - tox-run:
+          envlist: style
+
+
+# Run tox with envlist provided.
+#
+# Parameters:
+#
+#   envlist - string with comma-separated list of tox environment names
+- builder:
+    name: tox-run
+    builders:
+      - shell: |
+          #!/bin/bash -xe
+          # builder: tox-run
+          source $HOME/virtualenvs/tox/bin/activate
+          which tox
+          tox --version
+          tox --showconfig
+          tox -v -r -e {envlist}
+
+
+# Run tox with envlist and positional arguments provided.
+#
+# Parameters:
+#
+#   envlist - string with comma-separated list of tox environment names
+#   posargs - string with positional arguments to pass to tox
+- builder:
+    name: tox-run-with-args
+    builders:
+      - shell: |
+          #!/bin/bash -xe
+          # builder: tox-run
+          source $HOME/virtualenvs/tox/bin/activate
+          which tox
+          tox --version
+          tox --showconfig
+          tox -v -r -e {envlist} -- {posargs}
+
+
+- job-template:
+    name: '{name}-python-style'
+
+    description: |
+      Run Python style checks on {name}
+
+    parameters:
+      - gerrit-params
+
+    scm:
+      - internal-git-check:
+          git-repo-name: '{git-repo-name}'
+
+    triggers:
+      - internal-patch-posted:
+          git-repo-name: '{git-repo-name}'
+
+    builders:
+      - python-style
+
+
+- job-template:
+    name: '{name}-py27'
+
+    description: |
+      Run unit tests for {name} under Python 2.7 when a change is
+      proposed.
+
+    parameters:
+      - gerrit-params
+
+    scm:
+      - internal-git-check:
+          git-repo-name: '{git-repo-name}'
+
+    triggers:
+      - internal-patch-posted:
+          git-repo-name: '{git-repo-name}'
+
+    builders:
+      - tox-run:
+          envlist: 'py27'
+
+
+- job-template:
+    name: '{name}-py27-bitrot'
+
+    description: |
+      Run unit tests for {name} under Python 2.7 periodically in case
+      upstream dependencies change.
+
+    parameters:
+      - gerrit-params
+
+    scm:
+      - internal-git-merged:
+          git-repo-name: '{git-repo-name}'
+
+    triggers:
+      - daily
+
+    builders:
+      - tox-run:
+          envlist: 'py27'
+
+    publishers:
+      - cloud-chat-changes-only
+
+
+- job-group:
+    name: python-check
+    jobs:
+      - '{name}-python-style'
+      - '{name}-py27'
+
+
+- job-group:
+    name: python-bitrot
+    jobs:
+      - '{name}-py27-bitrot'
