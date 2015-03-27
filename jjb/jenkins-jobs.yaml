@@ -1,0 +1,84 @@
+- project:
+    name: jenkins-job-builder
+    jobs:
+      - jenkins-jobs-test
+      - jenkins-jobs-update
+      - jenkins-jobs-rebuild
+
+
+# Make sure the jenkins user has a good PATH
+- parameter:
+    name: jenkins-path
+
+    parameters:
+      - string:
+          name: PATH
+          default: '/opt/python2.7/bin:$PATH'
+
+
+- job:
+    name: jenkins-jobs-test
+    node: master
+    description: |
+      Ensure there are no parse errors in the jenkins job definitons
+      by running jenkins-job-builder in test mode.
+
+    parameters:
+      - gerrit-params
+      - jenkins-path
+
+    scm:
+      - internal-git-check:
+          git-repo-name: dhc/jenkins
+
+    triggers:
+      - internal-patch-posted:
+          git-repo-name: dhc/jenkins
+
+    builders:
+      - tox-run:
+          envlist: 'jjb'
+
+
+- job:
+    name: jenkins-jobs-update
+    node: master
+    description: |
+      Update jenkins when a job change merges
+
+    parameters:
+      - gerrit-params
+      - jenkins-path
+
+    scm:
+      - internal-git-merged:
+          git-repo-name: dhc/jenkins
+
+    triggers:
+      - internal-patch-merged:
+          git-repo-name: dhc/jenkins
+
+    builders:
+      - tox-run-with-args:
+          envlist: 'jjb-update'
+          posargs: '--flush-cache --ignore-cache'
+
+
+- job:
+    name: jenkins-jobs-rebuild
+    node: master
+    description: |
+      Rebuild all of the jenkins job definitions.
+
+    parameters:
+      - gerrit-params
+      - jenkins-path
+
+    scm:
+      - internal-git-merged:
+          git-repo-name: dhc/jenkins
+
+    builders:
+      - tox-run-with-args:
+          envlist: 'jjb-update'
+          posargs: '--flush-cache --ignore-cache'
