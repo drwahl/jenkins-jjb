@@ -24,7 +24,6 @@
       by running jenkins-job-builder in test mode.
 
     parameters:
-      - gerrit-params
       - jenkins-path
 
     scm:
@@ -48,7 +47,6 @@
       Update jenkins when a job change merges
 
     parameters:
-      - gerrit-params
       - jenkins-path
 
     scm:
@@ -73,7 +71,6 @@
       Rebuild all of the jenkins job definitions.
 
     parameters:
-      - gerrit-params
       - jenkins-path
 
     scm:

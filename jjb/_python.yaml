@@ -50,9 +50,6 @@
     description: |
       Run Python style checks on {name}
 
-    parameters:
-      - gerrit-params
-
     scm:
         - github:
               github-owner: '{github-project-owner}'
@@ -72,9 +69,6 @@
     description: |
       Run unit tests for {name} under Python 2.7 when a change is
       proposed.
-
-    parameters:
-      - gerrit-params
 
     scm:
         - github:
@@ -96,9 +90,6 @@
     description: |
       Run unit tests for {name} under Python 2.7 periodically in case
       upstream dependencies change.
-
-    parameters:
-      - gerrit-params
 
     scm:
         - github:
