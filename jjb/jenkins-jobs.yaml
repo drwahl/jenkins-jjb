@@ -36,9 +36,11 @@
       - github
 
     builders:
-      - tox-run:
-          envlist: 'jjb'
-
+      - shell: |
+          #!/bin/bash
+          rm -rf ${WORKSPACE}/output
+          mkdir -p ${WORKSPACE}/output
+          /usr/local/bin/jenkins-jobs -l DEBUG test -o ${WORKSPACE}/output ./jjb
 
 - job:
     name: jenkins-jobs-update
@@ -62,11 +64,13 @@
     builders:
       - shell: |
           #!/bin/bash
+          rm -rf ${WORKSPACE}/output
+          mkdir -p ${WORKSPACE}/output
+          /usr/local/bin/jenkins-jobs -l DEBUG test -o ${WORKSPACE}/output ./jjb
+          ./bin/check_vars.sh ${WORKSPACE}/output
           /usr/local/bin/jenkins-jobs -l DEBUG \
           --conf /etc/jenkins_jobs/jenkins_jobs.ini \
           update --delete-old ./jjb
-
-
 
 - job:
     name: jenkins-jobs-rebuild
