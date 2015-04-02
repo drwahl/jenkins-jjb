@@ -59,9 +59,9 @@
       - github
 
     builders:
-      - tox-run-with-args:
-          envlist: 'jjb-update'
-          posargs: '--flush-cache --ignore-cache'
+        - shell: |
+          #!/bin/bash
+                /usr/local/bin/jenkins-jobs -l debug --conf /etc/jenkins_jobs/jenkins_jobs.ini -delete-old jjb
 
 
 - job:
