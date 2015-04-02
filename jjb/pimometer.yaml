@@ -1,5 +1,7 @@
 - project:
     name: pimometer
+    description: |
+      Test pimometer style, to make sure we're SUPER pythonic!
 
     github-project-owner: 'drwahl'
     github-project-name: 'pimometer'
