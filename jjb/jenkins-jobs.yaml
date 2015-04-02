@@ -27,13 +27,13 @@
       - jenkins-path
 
     scm:
-        - github:
+      - github:
             github-owner: 'drwahl'
             github-project: 'jenkins-jjb'
             branch: 'master'
 
     triggers:
-        - github
+      - github
 
     builders:
       - tox-run:
@@ -77,10 +77,10 @@
       - jenkins-path
 
     scm:
-        - github:
-            github-owner: 'drwahl'
-            github-project: 'jenkins-jjb'
-            branch: 'master'
+      - github:
+          github-owner: 'drwahl'
+          github-project: 'jenkins-jjb'
+          branch: 'master'
 
     builders:
       - tox-run-with-args:
