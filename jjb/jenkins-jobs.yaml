@@ -52,7 +52,8 @@
     name: jenkins-jobs-update
     node: master
     description: |
-      Update jenkins when a job change merges
+      Update jenkins when a job change merges (and hopefully has been
+      tested).
 
     parameters:
       - jenkins-path
