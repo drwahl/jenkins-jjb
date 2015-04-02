@@ -44,9 +44,9 @@
           /usr/local/bin/jenkins-jobs -l DEBUG test -o ${WORKSPACE}/output ./jjb
 
     publishers:
-      - trigger-parameterized-builds:
-          - project: jenkins-jobs-update
-            condition: 'UNSTABLE_OR_BETTER'
+      - trigger:
+          project: jenkins-jobs-update
+          threshold: 'UNSTABLE'
 
 - job:
     name: jenkins-jobs-update
