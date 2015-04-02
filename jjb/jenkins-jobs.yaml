@@ -57,7 +57,7 @@
 
     triggers:
       - github
-      - poll-hourly
+      - poll-quarter-hourly
 
     builders:
       - shell: |
