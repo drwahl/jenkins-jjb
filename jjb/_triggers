@@ -1,0 +1,5 @@
+# Poll the SCM system hourly.
+- trigger:
+    name: poll-hourly
+    triggers:
+      - pollscm: "H * * * *"
