@@ -28,12 +28,13 @@
 
     scm:
       - github:
-            github-owner: 'drwahl'
-            github-project: 'jenkins-jjb'
-            branch: 'master'
+          github-owner: 'drwahl'
+          github-project: 'jenkins-jjb'
+          branch: 'master'
 
     triggers:
       - github
+      - poll-quarter-hourly
 
     builders:
       - shell: |
@@ -41,6 +42,11 @@
           rm -rf ${WORKSPACE}/output
           mkdir -p ${WORKSPACE}/output
           /usr/local/bin/jenkins-jobs -l DEBUG test -o ${WORKSPACE}/output ./jjb
+
+    publishers:
+      - trigger-parameterized-builds:
+          - project: jenkins-jobs-update
+            condition: 'UNSTABLE_OR_BETTER'
 
 - job:
     name: jenkins-jobs-update
@@ -57,17 +63,9 @@
           github-project: 'jenkins-jjb'
           branch: 'master'
 
-    triggers:
-      - github
-      - poll-quarter-hourly
-
     builders:
       - shell: |
           #!/bin/bash
-          rm -rf ${WORKSPACE}/output
-          mkdir -p ${WORKSPACE}/output
-          /usr/local/bin/jenkins-jobs -l DEBUG test -o ${WORKSPACE}/output ./jjb
-          ./bin/check_vars.sh ${WORKSPACE}/output
           /usr/local/bin/jenkins-jobs -l DEBUG \
           --conf /etc/jenkins_jobs/jenkins_jobs.ini \
           update --delete-old ./jjb
@@ -88,6 +86,10 @@
           branch: 'master'
 
     builders:
-      - tox-run-with-args:
-          envlist: 'jjb-update'
-          posargs: '--flush-cache --ignore-cache'
+      - shell: |
+          #!/bin/bash
+          /usr/local/bin/jenkins-jobs -l DEBUG \
+          --conf /etc/jenkins_jobs/jenkins_jobs.ini \
+          --flush-cache --ignore-cache \
+          update --delete-old ./jjb
+          
