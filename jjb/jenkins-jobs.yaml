@@ -50,10 +50,10 @@
       - jenkins-path
 
     scm:
-        - github:
-            github-owner: 'drwahl'
-            github-project: 'jenkins-jjb'
-            branch: 'master'
+      - github:
+          github-owner: 'drwahl'
+          github-project: 'jenkins-jjb'
+          branch: 'master'
 
     triggers:
       - github
