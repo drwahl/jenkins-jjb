@@ -63,7 +63,7 @@
           #!/bin/bash
           /usr/local/bin/jenkins-jobs -l DEBUG \
           --conf /etc/jenkins_jobs/jenkins_jobs.ini \
-          update --delete-old /vagrant/jjb
+          update --delete-old ./jjb
 
 
 
